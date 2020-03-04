@@ -1,9 +1,53 @@
+/////////
+// BST //
+/////////
+
 const BinarySearchTree = require('./data-structures/trees/binary-tree');
 
 const bst = new BinarySearchTree();
 bst.insert(1);
 bst.insert(3);
 bst.insert(2);
+bst.insert(100);
+bst.insert(23);
+bst.insert(33);
 
-console.log (bst.findNode(3)); // true;
-console.log (bst.findNode(5)); // false;
+bst.traverseInOrder();
+bst.traversePostOrder();
+
+console.log(`Does 3 Exist : ${bst.findNode(3)}`); // true;
+console.log(`Does 5 exist : ${bst.findNode(5)}`); // false;
+
+bst.remove(3);
+
+console.log(`Does 3 Exist : ${bst.findNode(3)}`); // true;
+
+/////////////////////////
+// Prime Number Search //
+/////////////////////////
+
+const isPrime = require('./algorithims/numbers');
+
+console.log(`Is 31 Prime: ${isPrime(31)}`);
+
+////////////
+// Matrix //
+////////////
+
+const spiralPrint = require('./algorithims/arrays').spiralPrint;
+
+let Matrix = [
+    [1, 2, 3],
+    [4, 5, 6],
+    [7, 8, 9]
+];
+
+console.log(spiralPrint(Matrix));
+
+Matrix = [
+    [1, 2, 3, 4],
+    [5, 6, 7, 8],
+    [9, 10, 11, 12]
+];
+
+console.log(spiralPrint(Matrix));

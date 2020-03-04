@@ -91,8 +91,34 @@ BinarySearchTree.prototype.findNode = function (value) {
             break;
         }
     }
-
     return found;
+}
+
+BinarySearchTree.prototype.traverseInOrder = function () {
+    traverseInOrderHelper(this._root);
+
+    function traverseInOrderHelper(node) {
+        if (!node)
+            return;
+
+        traverseInOrderHelper(node.left);
+        console.log(node.value);
+        traverseInOrderHelper(node.right);
+    }
+}
+
+BinarySearchTree.prototype.traversePostOrder = function () {
+    traversePostOrderHelper(this._root);
+
+    function traversePostOrderHelper(node){
+        if (node.left)
+        traversePostOrderHelper(node.left);
+        if (node.right)
+        traversePostOrderHelper(node.right);
+
+        console.log(node.value);
+
+    }
 
 }
 
