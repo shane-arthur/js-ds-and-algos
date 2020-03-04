@@ -1,0 +1,24 @@
+{
+  "name": "shane-arthur-js-ds-and-algos",
+  "version": "1.0.0",
+  "description": "Sample Repo for Rehashing Data Strictures and Algorithims In JS",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shane-arthur/js-ds-and-algos.git"
+  },
+  "keywords": [
+    "JS",
+    "Datastructures",
+    "Algorithims"
+  ],
+  "author": "Shane Arthur",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/shane-arthur/js-ds-and-algos/issues"
+  },
+  "homepage": "https://github.com/shane-arthur/js-ds-and-algos#readme"
+}
