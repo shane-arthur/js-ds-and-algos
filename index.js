@@ -51,3 +51,21 @@ Matrix = [
 ];
 
 console.log(spiralPrint(Matrix));
+
+////////////////////
+// Binary Search //
+///////////////////
+
+const Searches = require('./algorithims/searching');
+const { binarySearch } = Searches;
+
+const arr = [];
+
+for (let i = 0; i < 100; i++){
+    arr[i] = i+3;
+}
+
+const index = 44;
+const result = binarySearch(arr, 44);
+
+console.log(`Expected Index from Binary Search is 41 :  ${result}`  )
