@@ -10,3 +10,5 @@ function throttle(delay, func) {
         return func(...arguments);
     }
 }
+
+module.exports = throttle;
