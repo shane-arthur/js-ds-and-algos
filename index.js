@@ -66,6 +66,26 @@ for (let i = 0; i < 100; i++){
 }
 
 const index = 44;
-const result = binarySearch(arr, 44);
+const result = binarySearch(arr, index);
 
-console.log(`Expected Index from Binary Search is 41 :  ${result}`  )
+console.log(`Expected Index from Binary Search is 41 :  ${result}`  );
+
+
+//////////////////
+// Bubble Sort //
+/////////////////
+
+const SortAlgos = require('./algorithims/sorting');
+const Sort = new SortAlgos();
+const unsortedArr = [];
+
+for (let i = 0; i <50; i++){
+    const item = Math.floor(Math.random() * (51) + 1);
+    unsortedArr.push(item);
+}
+
+const sortedArr = Sort.bubble(unsortedArr);
+
+console.log(`sorted Arr : ${sortedArr}`);
+
+
