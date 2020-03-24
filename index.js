@@ -57,18 +57,20 @@ console.log(spiralPrint(Matrix));
 ///////////////////
 
 const Searches = require('./algorithims/searching');
-const { binarySearch } = Searches;
+const {
+    binarySearch
+} = Searches;
 
 const arr = [];
 
-for (let i = 0; i < 100; i++){
-    arr[i] = i+3;
+for (let i = 0; i < 100; i++) {
+    arr[i] = i + 3;
 }
 
 const index = 44;
 const result = binarySearch(arr, index);
 
-console.log(`Expected Index from Binary Search is 41 :  ${result}`  );
+console.log(`Expected Index from Binary Search is 41 :  ${result}`);
 
 
 //////////////////
@@ -78,14 +80,16 @@ console.log(`Expected Index from Binary Search is 41 :  ${result}`  );
 const SortAlgos = require('./algorithims/sorting');
 const Sort = new SortAlgos();
 const unsortedArr = [];
+const unsortedArr2 = [];
+const unsortedArr3 = [];
 
-for (let i = 0; i <50; i++){
+for (let i = 0; i < 50; i++) {
     const item = Math.floor(Math.random() * (51) + 1);
     unsortedArr.push(item);
+    unsortedArr2.push(item);
+    unsortedArr3.push(item);
 }
 
-const sortedArr = Sort.bubble(unsortedArr);
-
-console.log(`sorted Arr : ${sortedArr}`);
-
-
+console.log(`Bubble sort: ${Sort.bubble(unsortedArr)}`);
+console.log(`Selection sort :${Sort.selection(unsortedArr2)}`);
+console.log(`Insertion sort ${Sort.insertion(unsortedArr3)}`);
