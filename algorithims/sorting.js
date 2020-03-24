@@ -55,5 +55,4 @@ Sort.prototype.insertion = function (arr) {
 
 }
 
-
 module.exports = Sort;
