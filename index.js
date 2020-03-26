@@ -74,7 +74,7 @@ console.log(`Expected Index from Binary Search is 41 :  ${result}`);
 
 
 //////////////////
-// Bubble Sort //
+// Sorting Algos //
 /////////////////
 
 const SortAlgos = require('./algorithims/sorting');
@@ -82,14 +82,20 @@ const Sort = new SortAlgos();
 const unsortedArr = [];
 const unsortedArr2 = [];
 const unsortedArr3 = [];
+const unsortedArr4 = [];
+const unsortedArr5 = [];
 
 for (let i = 0; i < 50; i++) {
     const item = Math.floor(Math.random() * (51) + 1);
     unsortedArr.push(item);
     unsortedArr2.push(item);
     unsortedArr3.push(item);
+    unsortedArr4.push(item);
+    unsortedArr5.push(item);
 }
 
 console.log(`Bubble sort: ${Sort.bubble(unsortedArr)}`);
 console.log(`Selection sort :${Sort.selection(unsortedArr2)}`);
 console.log(`Insertion sort ${Sort.insertion(unsortedArr3)}`);
+console.log(`Quick sort ${Sort.quickSort(unsortedArr4)}`);
+console.log(`Count sort ${Sort.countSort(unsortedArr5)}`);

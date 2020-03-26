@@ -52,6 +52,73 @@ Sort.prototype.insertion = function (arr) {
     }
 
     return arr;
+}
+
+function partition(arr, left, right) {
+    const pivot = arr[Math.floor((right + left) / 2)];
+
+    while (left <= right) {
+        while (pivot > arr[left]) {
+            left++;
+        }
+        while (pivot < arr[right]) {
+            right--;
+        }
+
+        if (left <= right) {
+            const temp = arr[left];
+            arr[left] = arr[right];
+            arr[right] = temp;
+            left++;
+            right--;
+        }
+    }
+
+    return left;
+
+}
+
+function quickSortHelper(arr, left, right) {
+    let index;
+    if (arr.length > 1) {
+        index = partition(arr, left, right);
+
+        if (left < index - 1) {
+            quickSortHelper(arr, left, index - 1);
+        }
+
+        if (index < right) {
+            quickSortHelper(arr, index, right);
+        }
+    }
+
+    return arr;
+}
+
+Sort.prototype.quickSort = function (arr) {
+    return quickSortHelper(arr, 0, arr.length - 1);
+}
+
+Sort.prototype.countSort = function (arr) {
+    const output = [],
+        hash = {};
+
+    for (let i = 0; i < arr.length; i++) {
+        const currentNum = arr[i];
+        if (hash[currentNum]) {
+            hash[currentNum]++;
+        } else {
+            hash[currentNum] = 1;
+        }
+    }
+
+    for (const key in hash) {
+        const length = hash[key];
+        for (let j = 0; j < length; j++) {
+            output.push(key);
+        }
+    }
+    return output;
 
 }
 
