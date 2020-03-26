@@ -32,7 +32,7 @@ BinarySearchTree.prototype.insert = function (value) {
                     break;
                 }
             } else {
-                // do nothing for already existing node
+                continue;
             }
         }
 
@@ -105,6 +105,30 @@ BinarySearchTree.prototype.traverseInOrder = function () {
         console.log(node.value);
         traverseInOrderHelper(node.right);
     }
+}
+
+BinarySearchTree.prototype.traverseInOrderIterative = function () {
+    let root = this._root;
+    const output = [];
+    const stack = [];
+
+    if (!root) {
+        return output;
+    }
+
+    while (root !== null || stack.length > 0) {
+        while (root !== null) {
+            stack.push(root);
+            root = root.left ? root.left : null;
+        }
+
+        root = stack.pop();
+        output.push(root);
+        root = root.right ? root.right : null;
+    }
+
+    return output.map(item => item.value);
+
 }
 
 BinarySearchTree.prototype.traversePostOrder = function () {
