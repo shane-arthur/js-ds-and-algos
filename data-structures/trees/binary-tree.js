@@ -123,11 +123,11 @@ BinarySearchTree.prototype.traverseInOrderIterative = function () {
         }
 
         root = stack.pop();
-        output.push(root);
+        output.push(root.value);
         root = root.right ? root.right : null;
     }
 
-    return output.map(item => item.value);
+    return output.join(" ");
 
 }
 
