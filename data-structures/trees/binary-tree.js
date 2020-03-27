@@ -128,8 +128,28 @@ BinarySearchTree.prototype.traverseInOrderIterative = function () {
     }
 
     return output.join(" ");
+}
+
+BinarySearchTree.prototype.validateBinarySearchTree = function () {
+    const root = this._root;
+    if (root === null) return true;
+    const stack = [];
+    let prevNode = null;
+
+    while (root !== null || stack.length > 0) {
+        stack.push(root);
+        root = root.left ? root.left : null;
+    }
+
+    root = stack.pop();
+    if (prevNode !== null && prevNode.value >= root.value) return false;
+    prevNode = root;
+    root = root.right ? root.right : null;
+
+    return true;
 
 }
+
 
 BinarySearchTree.prototype.traversePostOrder = function () {
     traversePostOrderHelper(this._root);
@@ -143,7 +163,6 @@ BinarySearchTree.prototype.traversePostOrder = function () {
         console.log(node.value);
 
     }
-
 }
 
 module.exports = BinarySearchTree;
