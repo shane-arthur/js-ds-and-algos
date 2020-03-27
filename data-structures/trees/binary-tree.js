@@ -150,6 +150,23 @@ BinarySearchTree.prototype.validateBinarySearchTree = function () {
 
 }
 
+BinarySearchTree.prototype.findKthSmallestItem(k) {
+    let root = this._root;
+    const stack = [];
+
+    while (root !== null || stack.length > 0) {
+        stack.push(root);
+        root = root.left ? root.left : null;
+    }
+
+    root = stack.pop();
+    k--;
+    if (k === 0) return root.value;
+    root = root.right ? root.right : null;
+
+
+}
+
 
 BinarySearchTree.prototype.traversePostOrder = function () {
     traversePostOrderHelper(this._root);
