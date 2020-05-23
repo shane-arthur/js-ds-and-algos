@@ -1,7 +1,7 @@
 
 // define a LRU node which will act as an entry in the LFU cache which is 
 // essentially a doubly-linked list
-function LRUNode(key, value){
+function LFUNode(key, value){
     this.prev = null;
     this.next = null;
     this.key = key;
