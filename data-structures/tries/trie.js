@@ -1,40 +1,68 @@
-function Trie() {
+/**
+ * Initialize your data structure here.
+ */
+var WordDictionary = function () {
     this.children = {};
-}
+};
 
-Trie.prototype.insert = function (word) {
+/**
+ * Adds a word into the data structure. 
+ * @param {string} word
+ * @return {void}
+ */
+WordDictionary.prototype.addWord = function (word) {
     let cur = this;
+
     for (let i = 0; i < word.length; i++) {
         const char = word.charAt(i);
         if (!cur.children[char]) {
-            cur.children[char] = new Trie();
+            cur.children[char] = new WordDictionary();
         }
-
         cur = cur.children[char];
     }
 
     cur.isEnd = true;
-}
 
-Trie.prototype.find = function (word) {
+};
+
+/**
+ * Returns if the word is in the data structure. A word could contain the dot character '.' to represent any one letter. 
+ * @param {string} word
+ * @return {boolean}
+ */
+WordDictionary.prototype.search = function (word) {
     let cur = this;
+    let specialChar = '.';
     for (let i = 0; i < word.length; i++) {
         const char = word.charAt(i);
-        if (!cur.children[char]) {
-            return false;
+        if (char !== specialChar) {
+            if (!cur.children[char]) {
+                return false;
+            }
+            cur = cur.children[char];
+        } else {
+            if (i + 1 < word.length) {
+                let found = false;
+                Object.keys(cur.children).forEach(key => {
+                    const item = cur.children[key];
+                    if (item && item.children[word.charAt(i + 1)]) {
+                        cur = cur.children[key];
+                        found = true;
+                    }
+                });
+                if (!found) {
+                    return false;
+                }
+            }
         }
-        cur = cur.children[char];
     }
 
-    return cur;
-}
+    return true;
+};
 
-Trie.prototype.search = function (word) {
-    const res = this.find(word);
-    return !res ? false : res.isEnd === true;
-}
-
-Trie.prototype.startsWith = function (word) {
-    const res = this.find(word);
-    return !res ? false : true;
-}
+/** 
+ * Your WordDictionary object will be instantiated and called as such:
+ * var obj = new WordDictionary()
+ * obj.addWord(word)
+ * var param_2 = obj.search(word)
+ */
