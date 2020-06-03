@@ -48,10 +48,10 @@ function getNthFiboDp(n) {
 // Given n weights and the values of items, put these items in a knapsack of a given capacity, w, to get 
 // the maximum total value in the knapsac
 
-function knapsacNaive(index, weights, values, target) {
+function knapsacNaive(index = weights.length -1, weights, values, target) {
     let result = 0;
     if (index <= -1 || target <= 0) {
-        return 0
+        return 0;
     } else if (weights[index] > target) {
         result = knapsacNaive(index - 1, weights, values, target);
     } else {
@@ -118,4 +118,23 @@ function longestCommonSubsequenceDp(str1, str2) {
     }
 
     return matrix[matrix.length - 1][matrix[0].length - 1];
+}
+
+// coin change problem
+// given coins of different denominations, write a function to compute the fewest number of coins that you 
+// need to make up that amount. If that amount of money cannot be made up by any combination, return -1;
+
+function coinChangeDp(coins, target){
+    const arr = new Array(target + 1).fill(Number.MAX_SAFE_INTEGER);
+    arr[0] = 0;
+    
+    for(let i = 0; i <= target; i++){
+        for (let j = 0; j <= coins.length; j++){
+            if (coins[j] <= i){
+                arr[i] = Math.min(arr[i], 1 + dp[i - coins[j]]);
+            }   
+        }
+    }
+
+    return arr[target] > target ? -1 : arr[target];
 }
