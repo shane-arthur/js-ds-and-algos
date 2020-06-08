@@ -4,32 +4,32 @@
 //      [5]
 //  ];
 
- function flattenRecursively(arr, output = []) {
-     for (let i = 0; i < arr.length; i++) {
-         const item = arr[i];
+function flattenRecursively(arr, output = []) {
+    for (let i = 0; i < arr.length; i++) {
+        const item = arr[i];
 
-         if (Array.isArray(item)) {
-             output.push(item);
-         } else {
-             flattenRecursively(item, output)
-         }
+        if (Array.isArray(item)) {
+            output.push(item);
+        } else {
+            flattenRecursively(item, output)
+        }
 
-     }
- }
+    }
+}
 
- function flattenIteratively(arr) {
+function flattenIteratively(arr) {
 
-     const output = [];
-     const stack = [arr];
+    const output = [];
+    const stack = [arr];
 
-     while (!!stack.length) {
-         const item = stack.pop();
-         if (Array.isArray(item)) {
-             stack.unshift.apply(stack, item);
-         } else {
-             output.push(item);
-         }
-     }
+    while (!!stack.length) {
+        const item = stack.pop();
+        if (Array.isArray(item)) {
+            stack.unshift.apply(stack, item);
+        } else {
+            output.push(item);
+        }
+    }
 
-     return output;
- }
+    return output;
+}
