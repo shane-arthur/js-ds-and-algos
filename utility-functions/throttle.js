@@ -1,14 +1,18 @@
-function throttle(delay, func) {
+function throttle(fn, delay) {
+
     let lastCall = 0;
 
-    return function (...arguments) {
-        const now = new Date().getTime
-        if (now - lastCall > delay) {
-            return;
+    return function () {
+        const now = new Date().getTime();
+        if (!!lastCall) {
+            if (now - lastCall < delay) {
+                return
+            }
         }
         lastCall = now;
-        return func(...arguments);
+        fn.apply(this, arguments);
     }
+
 }
 
 module.exports = throttle;
