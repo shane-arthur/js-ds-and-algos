@@ -20,10 +20,10 @@ function flattenRecursively(arr, output = []) {
 function flattenIteratively(arr) {
 
     const output = [];
-    const stack = [arr];
+    const stack = arr.slice(0);
 
     while (!!stack.length) {
-        const item = stack.pop();
+        const item = stack.shift();
         if (Array.isArray(item)) {
             stack.unshift.apply(stack, item);
         } else {
