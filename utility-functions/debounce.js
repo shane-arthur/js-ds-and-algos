@@ -3,7 +3,11 @@ const debounce = (fn, time) => {
     return function () {
         const funcCall = () => fn.apply(this, arguments);
         clearTimeout(timeout);
+        if (!timeout) {
+            funcCall
+        } else {
         timeout = setTimeout(funcCall, time);
+        }
     }
 }
 
