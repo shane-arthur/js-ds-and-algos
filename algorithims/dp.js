@@ -138,3 +138,16 @@ function coinChangeDp(coins, target){
 
     return arr[target] > target ? -1 : arr[target];
 }
+
+
+function fiboDp(n){
+    
+    const arr = [0, 1];
+
+    for (let i = 2; i <= n; i++){
+        arr[n] = arr[n-1] + arr[n-2]
+    }
+
+    return arr[arr.length-1];
+    
+}
