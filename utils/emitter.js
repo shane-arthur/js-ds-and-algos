@@ -1,37 +1,27 @@
-function Emitter() {
-    this.events = new Map();
-    this.count = 1;
-}
+/**
+ * @param {string} S
+ * @param {string} T
+ * @return {string}
+ */
+var customSortString = function (S, T) {
 
-Emitter.prototype.subscribe = function (eventName, callback) {
-    let callbackIdx = -1;
-    if (!!callback && typeof callback === 'function') {
-        if (this.events.has(eventName)) {
-            this.events.get(eventName).push(callback);
-            callbackIdx = this.events.get(eventName).length - 1;
-        } else {
-            this.events.set(eventName, [callback]);
-            callbackIdx = 0;
-        }
+    const map = new Map();
+
+    for (let i = 0; i < S.length; i++) {
+        const char = S.charAt(i);
+        map.set(char, i);
     }
 
-    return {
-        release: () => this.events.get(eventName).splice(callbackIdx, 1),
-        name: `sub${this.count++}`
-    }
-}
+    return T.split('').sort((item1, item2) => {
 
-Emitter.prototype.emit = function (eventName, ...params) {
-    const funcs = this.events.get(eventName);
-    funcs.forEach(func => {
-        func.call(this, ...params);
-    })
-}
+        item1 = map.get(item1);
+        item2 = map.get(item2);
 
-const emitter = new Emitter();
-const sub1 = emitter.subscribe('click', (param) => alert(param));
-const sub2 = emitter.subscribe('click', (param) => alert(param));
-emitter.emit('click', 'silence');
+        if (item1 === undefined) item1 = Infinity;
+        if (item2 === undefined) item2 = Infinity;
 
-sub1.release();
-emitter.emit('click', 'jeffrey');
+        return item1 - item2;
+
+    }).join('');
+
+};

@@ -1,66 +1,43 @@
-function Heap(data) {
-    this.items = []
-}
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {number[]}
+ */
+var averageOfLevels = function (root) {
 
-Heap.prototype.swap = function (index1, index2) {
-    const temp = this.items[index1];
-    this.items[index1] = this.items[index2];
-    this.items[index2] = temp;
-}
+    if (!root) return [];
 
-Heap.prototype.parentIndex = function (index) {
-    return Math.floor((index - 1) / 2);
-}
+    const levels = [];
+    let level = 0;
+    dfs(root);
 
-Heap.prototype.parent = function (index) {
-    return this.items[this.parentIndex(index)];
-}
+    return levels.map(level => {
 
-Heap.prototype.leftChildIndex = function (index) {
-    return index * 2 + 1
-}
+        const val = level.reduce((acc, val) => {
+            return acc + val;
+        }, 0);
 
-Heap.prototype.rightChildIndex = function (index) {
-    return this.leftIndex + 1;
-}
+        return (val / level.length);
 
-Heap.prototype.rightChildItem = function (index) {
-    return this.items[this.rightChildIndex(index)];
-}
+    });
 
-Heap.prototype.leftChildItem = function (index) {
-    return this.items[this.leftChildIndex(index)];
-}
+    function dfs(node, level = 0) {
+        if (!node) return;
 
-Heap.prototype.peak = function () {
-    return this.heap[0];
-}
+        dfs(node.left, level + 1);
 
-Heap.prototype.poll = function () {
-    const item = this.items[0];
-    this.items[0] = this.items.pop();
-    this.bubbleDown();
-    return item;
-}
-
-Heap.prototype.bubbleDown = function () {
-    let index = 0;
-    while (this.leftChild(index) && this.leftChild(index) > this.items[index] ||
-        this.rightChild(index) > this.items[index]) {
-        let biggerIndex = this.leftChildIndex(leftChild);
-        if (this.rightChild(index) && this.rightChild(index) > this.items[biggerIndex]) {
-            biggerIndex = this.rightChildIndex(index);
+        if (!levels[level]) {
+            levels[level] = [];
         }
-        this.swap(biggerIndex, index);
-        index = biggerIndex;
-    }
-}
+        levels[level].push(node.val);
 
-Heap.prototype.bubbleUp = function () {
-    let index = this.items.length - 1;
-
-    while (this.parent[index] && this.parent(index) < this.items[index]) {
-        this.swap(this.parentIndex(parent), index);
-        index = this.parentIndex(index);
+        dfs(node.right, level + 1);
     }
-}
+};

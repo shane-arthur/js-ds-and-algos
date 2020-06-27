@@ -1,0 +1,80 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <style>
+        #field {
+            width: 200px;
+            height: 150px;
+            border: 10px solid black;
+            background-color: #00FF00;
+            overflow: hidden;
+            position: relative;
+        }
+
+        #ball {
+            height: 40px;
+            width: 40px;
+            position: absolute;
+            transition: 1s all;
+        }
+    </style>
+
+    <script>
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const ball = document.querySelector('img');
+            const field = document.querySelector('div');
+
+            field.addEventListener('click', (event) => {
+                const { clientX, clientY } = event;
+
+                const fieldCoords = field.getBoundingClientRect();
+
+                let top = clientY - field.clientTop - fieldCoords.top - ball.clientHeight / 2;
+                let left = clientX - field.clientLeft - fieldCoords.left - ball.clientWidth / 2;
+
+                if (top < 0) top = 0;
+                if (left < 0) left = 0;
+
+                if (top + ball.clientHeight > field.clientHeight) {
+                    top = field.clientHeight - ball.clientHeight;
+                }
+
+                if (left + ball.clientWidth > field.clientWidth) {
+                    left = field.clientWidth - ball.clientWidth;
+                }
+
+                console.log(fieldCoords)
+
+                ball.style.left = `${left}px`;
+                ball.style.top = `${top}px`;
+
+            });
+
+        });
+
+    </script>
+
+
+</head>
+
+<body style="height:2000px">
+
+    Click on a field to move the ball there.
+    <br> The ball should never leave the field.
+
+
+    <div id="field">
+        <img src="https://en.js.cx/clipart/ball.svg" id="ball"> . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+        . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+        . . . . . . . . . . . . .
+        . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+        . . . . . . . . . . . . . . . . . . . . . . . .
+    </div>
+
+
+</body>
+
+</html>

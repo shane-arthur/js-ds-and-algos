@@ -1,37 +1,77 @@
-function DataSource() {
-    let index = 0;
-    this._id = setInterval(() => this.emit(index++), 1000);
-}
-
-DataSource.prototype.emit = function (n) {
-    const limit = 10;
-    if (this.onData) {
-        this.onData(n);
+class Observable {
+    constructor(subscribe) {
+        this._subscribe = subscribe;
     }
 
-    if (n === limit) {
-        if (this.onComplete) {
-            this.onComplete();
+    subscribe(obs) {
+        const observer = new Observer(obs);
+        observer._unsubscribe = this._subscribe(observer);
+
+        return {
+            unsubscribe: observer.unsubscribe()
         }
-        this.destroy();
+
     }
 }
 
-DataSource.prototype.destroy = function () {
-    clearInterval(this._id);
+class Observer {
+    constructor(handler) {
+        this.handler = handler;
+        this.isUnsubscribed = false;
+    }
+
+    next(val) {
+        if (this.handler.next && !this.isUnsubscribed) {
+            this.handler.next(val);
+        }
+    }
+
+    error(err) {
+        if (!this.isUnsubscribed) {
+            if (this.handler.error) {
+                this.handler.error(err)
+            }
+            this.unsubscribe();
+        }
+    }
+
+    complete() {
+        if (!this.isUnsubscribed) {
+            if (this.handler.complete) {
+                this.handler.complete()
+            }
+            this.unsubscribe();
+        }
+    }
+
+    unsubscribe() {
+        this.isUnsubscribed = true;
+        if (this._unsubscribe) {
+            this._unsubscribe();
+        }
+    }
 }
 
-function Observable(observer){
-    const dataSource = new DataSource();
-    dataSource.onData = (e) => observer.next(e);
-    dataSource.onError = (err) => observer.error(err);
-    dataSource.onComplete = () => observer.complete();
-
-    return () => dataSource.destroy();
+Observable.from = function (values) {
+    return new Observable(observer => {
+        for (const value of values) {
+            observer.next(value);
+        }
+        observer.complete();
+        return () => console.log('observable.from : unsubscribed');
+    });
 }
 
-const unsub = Observable({
-    next(x) { console.log(x); },
-    error(err) { console.error(err); },
-    complete() { console.log('done')}
-  });
+const numbers$ = Observable.from([0, 1, 2, 3, 4]);
+const subscription = numbers$.subscribe({
+    next(value) {
+        console.log(value);
+    },
+    error(err) {
+        console.error(err);
+    },
+    complete() {
+        console.info('done');
+    }
+});
+setTimeout(subscription.unsubscribe, 500);
