@@ -88,6 +88,14 @@ class Observable {
         });
     }
 
+    pipe(...transformers) {
+
+        return transformers.reduce((observable, transformation) => {
+            return transformation(observable);
+        }, this);
+
+    }
+
     subscribe(handler) {
         const observer = new Observer(handler);
         observer._unsubscribe = this._setup(observer);
@@ -97,6 +105,7 @@ class Observable {
         };
 
     }
+
 }
 
 const handler = {
@@ -112,10 +121,40 @@ const handler = {
     }
 };
 
-window.addEventListener('DOMContentLoaded', () => {
-    const element = document.querySelector('button[name="shanes-button"]');
+const map = (transform) => {
+    return (observable) => new Observable((observer) => {
+        observable.subscribe({
+            next(value) {
+                observer.next(transform(value));
+            },
+            error(err) {
+                observer.error(err);
+            },
+            complete() {
+                observer.complete();
+            }
+        })
+    });
+}
 
-    const event$ = Observable.fromEvent(element, 'click');
-    const sub = event$.subscribe(handler);
+const tap = (transform) => {
+    return (observable) => new Observable((observer) => {
+        observable.subscribe({
+            next(value) {
+                transform.call(this, arguments);
+                observer.next((value));
+            },
+            error(err) {
+                observer.error(err);
+            },
+            complete() {
+                observer.complete();
+            }
+        })
+    });
+}
 
-});
+const numbers$ = Observable.from([1, 2, 3, 4, 5]);
+const sub = numbers$.pipe(map(val => val * 13),
+    tap(() => console.log('fuck my dick hurts'))
+).subscribe(handler);
