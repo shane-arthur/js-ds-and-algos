@@ -7,56 +7,66 @@
         #field {
             width: 200px;
             height: 150px;
-            border: 10px solid black;
+            border: 5px solid black;
             background-color: #00FF00;
             overflow: hidden;
             position: relative;
         }
 
         #ball {
-            height: 40px;
-            width: 40px;
             position: absolute;
             transition: 1s all;
+            height: 40px;
+            width: 40px;
         }
     </style>
 
     <script>
 
         window.addEventListener('DOMContentLoaded', () => {
-            const ball = document.querySelector('img');
-            const field = document.querySelector('div');
 
-            field.addEventListener('click', (event) => {
+            // get ball and field elements
+            const ball = document.querySelector('#ball');
+            const field = document.querySelector('#field');
+
+            // add onclick
+            field.onclick = (event) => {
+
+                // get ball x and ball y positions
                 const { clientX, clientY } = event;
-
+                // get the field bounding rectangle
                 const fieldCoords = field.getBoundingClientRect();
 
+                console.log(field.clientTop, fieldCoords.top);
+
+                // on page => height of ball click - height from top - border
                 let top = clientY - field.clientTop - fieldCoords.top - ball.clientHeight / 2;
+                // on page => left of ball click - width from left - border
                 let left = clientX - field.clientLeft - fieldCoords.left - ball.clientWidth / 2;
 
+                // set top to 0 if we're negative
                 if (top < 0) top = 0;
                 if (left < 0) left = 0;
 
+                // if ball is too low, set ball to lowest position
                 if (top + ball.clientHeight > field.clientHeight) {
                     top = field.clientHeight - ball.clientHeight;
                 }
 
+                // if ball is too right, set ball to right most position in field
                 if (left + ball.clientWidth > field.clientWidth) {
                     left = field.clientWidth - ball.clientWidth;
                 }
 
-                console.log(fieldCoords)
-
                 ball.style.left = `${left}px`;
                 ball.style.top = `${top}px`;
 
-            });
+            };
+
 
         });
 
     </script>
-
 
 </head>
 
