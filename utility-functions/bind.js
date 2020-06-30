@@ -1,16 +1,19 @@
-function bind(context, ...args) {
 
-    return function (...nextArgs) {
-        this.apply(context, [...nextArgs, ...args])
-    }
+function sample(firstName, secondName) {
+	console.log(`${firstName} ${secondName} is a ${this.type}`);
 }
 
-function dummy(firstName, lastName) {
-    alert(`${firstName} ${lastName} is a ${this.desc}`);
+
+function bind(context, ...params){
+	
+  return (...nextParams) => {
+  	this.apply(context, [...params, ...nextParams]);
+  };
+  
 }
 
-const func = dummy.bind({
-    desc: 'king'
-}, 'Shane');
+Function.prototype.bind = bind;
 
-func('Arthur');
+const funcCall = sample.bind({type: 'cool guy'});
+
+console.log(funcCall('Shane', 'Arthur'));
