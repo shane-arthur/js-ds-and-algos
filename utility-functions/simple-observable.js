@@ -1,0 +1,1 @@
+// an observable is just a function. The function takes an observer as an argument and returns a subscription object.
