@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shanes pooper</title>
+    <style>
+        section {
+            height: 1000px;
+            border: 1px solid black;
+            display: flex;
+            direction: column;
+            justify-content: center;
+            padding: 25px;
+        }
+
+        div>section>img {
+            width: 300px;
+            height: auto;
+        }
+    </style>
+    <script>
+        window.addEventListener('load', () => {
+
+            let observer = new IntersectionObserver(
+                entries => {
+                    entries.forEach(entry => {
+                        const { isIntersecting, target } = entry;
+                        if (isIntersecting) {
+                            alert('intersecting');
+                            target.src = 'https://i0.wp.com/bestlifeonline.com/wp-content/uploads/2019/04/clown-playing-with-keyboard.jpg?resize=1024%2C678&ssl=1';
+                            observer = observer.disconnect();
+                        }
+                    });
+                },
+                {
+                    root: document.querySelector(".div")
+                }
+            );
+
+            const img = document.querySelector('.second-image > img');
+            observer.observe(img);
+
+        }, false);
+    </script>
+
+</head>
+
+<body>
+
+    <div>
+        <section class="first-image">
+            <img
+                src="https://static.boredpanda.com/blog/wp-content/uploads/2017/12/funny-weird-wtf-stock-photos-7-5a391ad5a43f9__700.jpg" />
+        </section>
+
+        <section class="second-image">
+            <img />
+        </section>
+
+    </div>
+
+</body>
+
+</html>
