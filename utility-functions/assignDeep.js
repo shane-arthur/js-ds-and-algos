@@ -18,8 +18,6 @@ function isObject(obj) {
 }
 
 function assignDeep(source, target) {
-
-
     for (const key in target) {
 
         if (!isObject(target[key])) {

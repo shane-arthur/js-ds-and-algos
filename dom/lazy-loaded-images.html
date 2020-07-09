@@ -29,7 +29,7 @@
                         const { isIntersecting, target } = entry;
                         if (isIntersecting) {
                             alert('intersecting');
-                            target.src = 'https://i0.wp.com/bestlifeonline.com/wp-content/uploads/2019/04/clown-playing-with-keyboard.jpg?resize=1024%2C678&ssl=1';
+                            setTimeout(() => target.src = 'https://i0.wp.com/bestlifeonline.com/wp-content/uploads/2019/04/clown-playing-with-keyboard.jpg?resize=1024%2C678&ssl=1', 2000);
                             observer = observer.disconnect();
                         }
                     });

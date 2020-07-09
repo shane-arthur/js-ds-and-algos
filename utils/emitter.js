@@ -1,27 +1,48 @@
-/**
- * @param {string} S
- * @param {string} T
- * @return {string}
- */
-var customSortString = function (S, T) {
 
-    const map = new Map();
+const uuidGenerator = () => {
+    const uuid = '';
 
-    for (let i = 0; i < S.length; i++) {
-        const char = S.charAt(i);
-        map.set(char, i);
+    for(let i = 0; i < 48; i++){
+        const idx = Math.random() * 100;
+        uuid.concat(i % 2 === 0 ? String.fromCharCode(idx): idx);
     }
 
-    return T.split('').sort((item1, item2) => {
+    return uuid;
+}
 
-        item1 = map.get(item1);
-        item2 = map.get(item2);
 
-        if (item1 === undefined) item1 = Infinity;
-        if (item2 === undefined) item2 = Infinity;
+function Emitter() {
+    this.events = new Map();
+    this.count = 1;
+}
 
-        return item1 - item2;
+Emitter.prototype.subscribe = function (eventName, callback) {
+   
+        if (!this.events.has(eventName)){
+            this.events.set(eventName, new Map());
+        }
 
-    }).join('');
+        const key = uuidGenerator();
+        this.events.get(eventName).set(key, callback);
 
-};
+        return {
+            release: () => this.events.get(eventName).delete(key),
+            name: `sub${this.count++}`
+
+    }
+
+Emitter.prototype.emit = function (eventName, ...params) {
+    const funcs = this.events.get(eventName);
+    funcs.forEach(func => {
+        func.call(this, ...params);
+    })
+}
+
+const emitter = new Emitter();
+const sub1 = emitter.subscribe('click', (param) => alert(param));
+const sub2 = emitter.subscribe('click', (param) => alert(param));
+emitter.emit('click', 'silence');
+
+sub1.release();
+emitter.emit('click', 'jeffrey'); 
+
