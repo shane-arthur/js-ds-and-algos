@@ -51,3 +51,35 @@ SinglyLinkedList.prototype.remove = function (value) {
     }
 
 }
+
+
+function Node(val) {
+    this.val = val;
+    this.next = this.prev = null;
+  }
+  
+  function DoublyLinkedList() {
+    this.head = new Node(null);
+    this.tail = new Node(null);
+    this.head.next = this.tail;
+    this.tail.prev = this.head;
+  }
+  
+  DoubleLinkedList.prototype.insertAtHead = function(val) {
+    const node = new Node(val);
+    node.next = this.head.next;
+    this.head.next.prev = node;
+    node.prev = this.head;
+  }
+  
+  DoublyLinkedList.prototype.removeNode = function(node) {
+    node.prev.next = node.next;
+    node.next.prev = node.prev;
+  }
+  
+  DoublyLinkedList.prototype.removeAtTail = function() {
+    const tail = this.tail.prev;
+    this.removeNode(tail);
+    return tail.val;
+  }
+  
