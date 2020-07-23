@@ -1,18 +1,23 @@
-function throttle(fn, delay) {
+document.addEventListener('DOMContentLoaded', () => {
 
-    let lastCall = 0;
+    const button = document.querySelector('button');
+    let i = 0;
+    button.onclick = throttle(() => console.log('Clicked : ', ++i), 1000);
+});
+
+function throttle(fn, delay) {
+    let timer = null;
 
     return function () {
-        const now = new Date().getTime();
-        if (!!lastCall) {
-            if (now - lastCall < delay) {
-                return
-            }
+        if (timer) {
+            return;
         }
-        lastCall = now;
-        fn.apply(this, arguments);
+
+        timer = setTimeout(() => {
+
+            fn.apply(this, arguments);
+            timer = null;
+
+        }, delay);
     }
-
 }
-
-module.exports = throttle;
