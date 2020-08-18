@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <title>Hand Clock</title>
+    <style>
+      .clock {
+        border-radius: 50%;
+        border: 2px solid black;
+        position: relative;
+        height: 500px;
+        width: 500px;
+      }
+
+      .hour-container {
+        animation: rotate 60*60*24s infinite;
+      }
+
+      .minutes-container {
+        animation: rotate 60*60s infinite;
+      }
+
+      .seconds-container {
+        animation: rotate 60s infinite;
+      }
+
+      .hours,
+      .minutes,
+      .seconds {
+        background: black;
+        height: 20%;
+        width: 10px;
+        position: absolute;
+        transform-origin: 50% 100%;
+        left: 50%;
+        bottom: 50%;
+      }
+
+      .minutes {
+        height: 30%;
+        width: 8px;
+      }
+
+      .seconds {
+        height: 40%;
+        width: 5px;
+      }
+
+      .seconds:hover {
+        transform: scale(1.1);
+      }
+
+      @keyframes rotate {
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <div class="clock">
+      <div class="hours-container">
+        <div class="hours"></div>
+      </div>
+      <div class="minutes-container">
+        <div class="minutes"></div>
+      </div>
+      <div class="seconds-container">
+        <div class="seconds"></div>
+      </div>
+    </div>
+    <script>
+      function initialClock() {
+        const date = new Date();
+        const hour = date.getHours();
+        const minute = date.getMinutes();
+        const second = date.getSeconds();
+
+        // let minutes = minute / 60;
+
+        const secondAngle = second * 6;
+        const minuteAngle = minute * 6;
+        const hourAngle = (hour % 12 + parseInt((minute + parseInt(second) / 60) / 60)) * 30;
+
+        const hourEle = document.getElementsByClassName('hours')[0];
+        const minuteEle = document.getElementsByClassName('minutes')[0];
+        const secEle = document.getElementsByClassName('seconds')[0];
+
+        // skew
+        hourEle.style.transform = `rotate(${hourAngle}deg)`;
+        minuteEle.style.transform = `rotate(${minuteAngle}deg)`;
+        secEle.style.transform = `rotate(${secondAngle}deg)`;
+      }
+
+      window.requestAnimationFrame(initialClock);
+
+    </script>
+  </body>
+
+</html>

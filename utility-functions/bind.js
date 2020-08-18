@@ -9,7 +9,7 @@ function bind(context, ...params){
   return (...nextParams) => {
   	this.apply(context, [...params, ...nextParams]);
   };
-  
+
 }
 
 Function.prototype.bind = bind;
