@@ -46,6 +46,31 @@ function getNthFiboTailRecursive(n, lastLast = 0, last = 1) {
     return getNthFiboTailRecursive(n - 1, last, lastLast + last);
 }
 
+function memoize(fn) {
+    const cache = new Map();
+
+    return function () {
+        const key = JSON.stringify(arguments);
+        if (cache.has(key)) {
+            return cache.get(key);
+        } else {
+            const res = fn.apply(this, arguments);
+            cache.set(key, res);
+            return res;
+        }
+    }
+
+}
+
+const memoFib = memoize(function (n) {
+    if (n < 2) {
+        return n;
+    } else {
+        return memoFib(n - 1) + memoFib(n - 2);
+    }
+});
+
+
 // resursive pascals triangle
 function pascalsTriangle(row, col) {
     if (col === 0) {
