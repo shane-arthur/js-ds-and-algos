@@ -15,6 +15,8 @@ function flattenRecursively(arr, output = []) {
         }
 
     }
+
+    return output;
 }
 
 function flattenIteratively(arr) {
