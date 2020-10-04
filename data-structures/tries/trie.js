@@ -1,61 +1,78 @@
-/**
- * Initialize your data structure here.
- */
-var WordDictionary = function () {
+function Trie() {
     this.children = {};
-};
+}
 
-/**
- * Adds a word into the data structure. 
- * @param {string} word
- * @return {void}
- */
-WordDictionary.prototype.addWord = function (word) {
-    let cur = this;
+Trie.prototype.addWord = function (word) {
+    let current = this;
 
     for (let i = 0; i < word.length; i++) {
         const char = word.charAt(i);
-        if (!cur.children[char]) {
-            cur.children[char] = new WordDictionary();
+
+        if (!current.children[char]) {
+            current.children[char] = new Trie();
         }
-        cur = cur.children[char];
+        current = current.children[char];
     }
 
-    cur.isEnd = true;
+    current.word = word;
+}
 
-};
+// allow for a bad word which is denoted by a '.'
+// we could change this to allow for one mistyped character
+Trie.prototype.getPrefix = function (word) {
+    let badCount = 0;
+    return dfs(this);
 
-/**
- * Returns if the word is in the data structure. A word could contain the dot character '.' to represent any one letter. 
- * @param {string} word
- * @return {boolean}
- */
-WordDictionary.prototype.search = function (word) {
-    let cur = this;
-    let specialChar = '.';
-    for (let i = 0; i < word.length; i++) {
-        const char = word.charAt(i);
-        if (char !== specialChar) {
-            if (!cur.children[char]) {
-                return false;
+    function dfs(node, index = 0) {
+        if (!node) {
+            return false;
+        }
+
+        if (word.length === index) {
+            return node;
+        }
+
+        const char = word.charAt(index);
+
+        if (char === '.') {
+            if (++badCount === 2) return false;
+            for (const child in node.children) {
+                if (!!dfs(node.children[child], index + 1)) return node;
             }
-            cur = cur.children[char];
-        } else {
-            if (i + 1 < word.length) {
-                let found = false;
-                Object.keys(cur.children).forEach(key => {
-                    const item = cur.children[key];
-                    if (item && item.children[word.charAt(i + 1)]) {
-                        cur = cur.children[key];
-                        found = true;
-                    }
-                });
-                if (!found) {
-                    return false;
-                }
-            }
+        } else if (!!node.children[char]) {
+            return dfs(node.children[char], index + 1);
+        }
+
+        return false;
+
+    }
+}
+
+Trie.prototype.getAllWords = function (term) {
+    const current = this.getPrefix(term);
+    if (!current) return [];
+
+    const output = [];
+    dfs(current);
+    return output;
+
+    function dfs(node) {
+        if (!!node.word) {
+            output.push(node.word);
+        }
+
+        for (const child in node.children) {
+            dfs(node.children[child]);
         }
     }
+}
 
-    return true;
-};
+const famousPeople = ['Elton John', 'Ellen Degenerous', 'Elton Brand', 'Eminem'];
+
+const trie = new Trie();
+
+for (const person of famousPeople) {
+    trie.addWord(person);
+}
+
+const terms = console.log(trie.getAllWords('Ew.n'));
