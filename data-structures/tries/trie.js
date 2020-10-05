@@ -20,7 +20,7 @@ Trie.prototype.addWord = function (word) {
 // allow for a bad word which is denoted by a '.'
 // we could change this to allow for one mistyped character
 Trie.prototype.getPrefix = function (word) {
-    let badCount = 0;
+    let badCount = -9999;
     return dfs(this);
 
     function dfs(node, index = 0) {
@@ -37,7 +37,7 @@ Trie.prototype.getPrefix = function (word) {
         if (char === '.') {
             if (++badCount === 2) return false;
             for (const child in node.children) {
-                if (!!dfs(node.children[child], index + 1)) return node;
+                if (!!dfs(node.children[child], index + 1)) return dfs(node.children[child], index + 1);
             }
         } else if (!!node.children[char]) {
             return dfs(node.children[char], index + 1);
@@ -75,4 +75,4 @@ for (const person of famousPeople) {
     trie.addWord(person);
 }
 
-const terms = console.log(trie.getAllWords('Ew.n'));
+const terms = console.log(trie.getAllWords('Elton arand'));
