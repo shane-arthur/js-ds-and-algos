@@ -66,3 +66,4 @@ hash.set('shane', 'cool1');
 hash.set('shane2', 'cool2');
 console.log(hash.get('shane'));
 console.log(hash.get('shane2'));
+console.log(hash.get('shan3e2'));
