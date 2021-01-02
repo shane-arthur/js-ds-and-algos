@@ -117,3 +117,36 @@ function isPalindrome(str) {
         }
     }
 }
+
+// flatten a multi-level object into nested keys, seperated by '.';
+
+const obj = {
+    one: '1',
+    two: {
+        three: {
+            four: '4',
+            five: '5'
+        },
+        six: '6'
+    },
+    seven: '7'
+}
+
+console.log(flatten(obj));
+
+function flatten(obj, key = '', output = {}) {
+
+
+    if (typeof obj !== 'object' || obj === null) {
+        output[key] = obj;
+        return;
+    }
+
+
+    for (const k in obj) {
+        const newKey = !key ? k : key.concat('.').concat(k);
+        flatten(obj[k], newKey, output);
+    }
+
+    return output;
+}
